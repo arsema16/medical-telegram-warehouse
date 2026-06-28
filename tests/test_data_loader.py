@@ -7,7 +7,7 @@ import json
 import pytest
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
 
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -98,14 +98,18 @@ class TestDataLoader:
         """Test raw table creation."""
         mock_connection = Mock()
         mock_cursor = Mock()
-        mock_connection.cursor.return_value.__enter__.return_value = mock_cursor
+        
+        mock_cursor_context = MagicMock()
+        mock_cursor_context.__enter__ = Mock(return_value=mock_cursor)
+        mock_cursor_context.__exit__ = Mock(return_value=False)
+        
+        mock_connection.cursor.return_value = mock_cursor_context
         mock_connect.return_value = mock_connection
-
+        
         data_loader.connection = mock_connection
         data_loader.create_raw_table()
-
-        # Check that execute was called with SQL containing CREATE TABLE
-        assert mock_cursor.execute.called
+        
+        mock_cursor.execute.assert_called_once()
         sql_call = mock_cursor.execute.call_args[0][0]
         assert 'CREATE SCHEMA' in sql_call
         assert 'CREATE TABLE' in sql_call
@@ -114,7 +118,6 @@ class TestDataLoader:
 
     def test_load_json_files(self, data_loader, sample_messages, tmp_path):
         """Test loading JSON files."""
-        # Create test JSON files
         date_str = datetime.now().date().isoformat()
         date_dir = data_loader.data_dir / date_str
         date_dir.mkdir(parents=True, exist_ok=True)
@@ -123,7 +126,6 @@ class TestDataLoader:
         with open(file_path, 'w') as f:
             json.dump([sample_messages[0]], f)
 
-        # Load data
         messages = data_loader.load_json_files()
 
         assert len(messages) == 1
@@ -132,7 +134,6 @@ class TestDataLoader:
 
     def test_load_json_files_with_date_filter(self, data_loader, tmp_path):
         """Test loading JSON files with date filter."""
-        # Create files for different dates
         date1 = '2026-06-24'
         date2 = '2026-06-25'
 
@@ -146,7 +147,6 @@ class TestDataLoader:
                      'channel_name': 'test'}
                 ], f)
 
-        # Load only date1
         messages = data_loader.load_json_files(date_filter=date1)
 
         assert len(messages) == 1
@@ -168,7 +168,7 @@ class TestDataLoader:
             f.write('invalid json {')
 
         messages = data_loader.load_json_files()
-        assert messages == []  # Should handle error gracefully
+        assert messages == []
 
     @patch('src.data_loader.execute_values')
     @patch('psycopg2.connect')
@@ -177,7 +177,12 @@ class TestDataLoader:
         """Test loading data to database."""
         mock_connection = Mock()
         mock_cursor = Mock()
-        mock_connection.cursor.return_value.__enter__.return_value = mock_cursor
+        
+        mock_cursor_context = MagicMock()
+        mock_cursor_context.__enter__ = Mock(return_value=mock_cursor)
+        mock_cursor_context.__exit__ = Mock(return_value=False)
+        
+        mock_connection.cursor.return_value = mock_cursor_context
         mock_connect.return_value = mock_connection
 
         data_loader.connection = mock_connection
@@ -200,15 +205,23 @@ class TestDataLoader:
         """Test handling database error during load."""
         mock_connection = Mock()
         mock_cursor = Mock()
-        mock_cursor.execute.side_effect = Exception("Database error")
-        mock_connection.cursor.return_value.__enter__.return_value = mock_cursor
+        
+        mock_cursor_context = MagicMock()
+        mock_cursor_context.__enter__ = Mock(return_value=mock_cursor)
+        mock_cursor_context.__exit__ = Mock(return_value=False)
+        
+        mock_connection.cursor.return_value = mock_cursor_context
+        mock_connection.encoding = 'UTF-8'
         mock_connect.return_value = mock_connection
-
+        
         data_loader.connection = mock_connection
-
-        with pytest.raises(Exception, match="Database error"):
-            data_loader.load_to_database(sample_messages)
-
+        
+        with patch('src.data_loader.execute_values') as mock_execute_values:
+            mock_execute_values.side_effect = Exception("Database error")
+            
+            with pytest.raises(Exception, match="Database error"):
+                data_loader.load_to_database(sample_messages)
+        
         mock_connection.rollback.assert_called_once()
 
     @patch('src.data_loader.DataLoader.connect')
@@ -220,8 +233,10 @@ class TestDataLoader:
         """Test load_all workflow."""
         mock_load_json.return_value = [{'message_id': 1}]
         mock_load_to_db.return_value = 1
-
-        count = data_loader.load_all()
+        
+        # Mock create_raw_table to avoid connection issues
+        with patch.object(data_loader, 'create_raw_table'):
+            count = data_loader.load_all()
 
         mock_connect.assert_called_once()
         mock_load_json.assert_called_once()
@@ -237,9 +252,8 @@ class TestDataLoader:
         data_loader.close()
         mock_connection.close.assert_called_once()
 
-        # Test closing when connection is None
         data_loader.connection = None
-        data_loader.close()  # Should not raise
+        data_loader.close()
 
 
 class TestDataLoaderIntegration:
