@@ -233,8 +233,10 @@ class TestDataLoader:
         """Test load_all workflow."""
         mock_load_json.return_value = [{'message_id': 1}]
         mock_load_to_db.return_value = 1
-
-        count = data_loader.load_all()
+        
+        # Mock create_raw_table to avoid connection issues
+        with patch.object(data_loader, 'create_raw_table'):
+            count = data_loader.load_all()
 
         mock_connect.assert_called_once()
         mock_load_json.assert_called_once()
