@@ -7,7 +7,7 @@ import json
 import pytest
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
 
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -99,17 +99,20 @@ class TestDataLoader:
         # Create mock objects
         mock_connection = Mock()
         mock_cursor = Mock()
-
-        # Setup context manager properly
-        mock_connection.__enter__ = Mock(return_value=mock_connection)
-        mock_connection.__exit__ = Mock(return_value=False)
-        mock_connection.cursor.return_value = mock_cursor
-
+        
+        # Create a mock context manager for the cursor
+        mock_cursor_context = MagicMock()
+        mock_cursor_context.__enter__ = Mock(return_value=mock_cursor)
+        mock_cursor_context.__exit__ = Mock(return_value=False)
+        
+        # Setup the connection to return the cursor context manager
+        mock_connection.cursor.return_value = mock_cursor_context
+        
         mock_connect.return_value = mock_connection
-
+        
         data_loader.connection = mock_connection
         data_loader.create_raw_table()
-
+        
         # Verify
         mock_cursor.execute.assert_called_once()
         sql_call = mock_cursor.execute.call_args[0][0]
@@ -183,7 +186,14 @@ class TestDataLoader:
         """Test loading data to database."""
         mock_connection = Mock()
         mock_cursor = Mock()
-        mock_connection.cursor.return_value.__enter__.return_value = mock_cursor
+        
+        # Create a mock context manager for the cursor
+        mock_cursor_context = MagicMock()
+        mock_cursor_context.__enter__ = Mock(return_value=mock_cursor)
+        mock_cursor_context.__exit__ = Mock(return_value=False)
+        
+        mock_connection.cursor.return_value = mock_cursor_context
+        
         mock_connect.return_value = mock_connection
 
         data_loader.connection = mock_connection
@@ -206,8 +216,14 @@ class TestDataLoader:
         """Test handling database error during load."""
         mock_connection = Mock()
         mock_cursor = Mock()
+        
+        # Create a mock context manager for the cursor
+        mock_cursor_context = MagicMock()
+        mock_cursor_context.__enter__ = Mock(return_value=mock_cursor)
+        mock_cursor_context.__exit__ = Mock(return_value=False)
+        
+        mock_connection.cursor.return_value = mock_cursor_context
         mock_cursor.execute.side_effect = Exception("Database error")
-        mock_connection.cursor.return_value.__enter__.return_value = mock_cursor
         mock_connect.return_value = mock_connection
 
         data_loader.connection = mock_connection
