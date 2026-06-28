@@ -293,18 +293,41 @@ text
 ├── pytest.ini                     # Test configuration
 └── README.md                      # This file
 ```
-🌐 API Documentation
-Endpoints
-Method	Endpoint	Description	Example
-GET	/	Welcome message	-
-GET	/api/messages/stats	Overall statistics	-
-GET	/api/reports/top-products	Top mentioned products	?limit=10&channel=chemed
-GET	/api/channels/{channel_name}/activity	Channel activity	/api/channels/chemed/activity?days=7
-GET	/api/search/messages	Search messages	?query=paracetamol&limit=20
-GET	/api/reports/visual-content	Visual content statistics	-
-GET	/api/reports/daily-trends	Daily trends	?days=7
+## 🌐 API Documentation
+
+### Available Endpoints
+
+| Method | Endpoint | Description | Example |
+|--------|----------|-------------|---------|
+| `GET` | `/` | Welcome message | `GET /` |
+| `GET` | `/api/messages/stats` | Overall statistics | `GET /api/messages/stats` |
+| `GET` | `/api/reports/top-products` | Top mentioned products | `GET /api/reports/top-products?limit=10&channel=chemed` |
+| `GET` | `/api/channels/{channel_name}/activity` | Channel activity | `GET /api/channels/chemed/activity?days=7` |
+| `GET` | `/api/search/messages` | Search messages | `GET /api/search/messages?query=paracetamol&limit=20` |
+| `GET` | `/api/reports/visual-content` | Visual content statistics | `GET /api/reports/visual-content` |
+| `GET` | `/api/reports/daily-trends` | Daily trends | `GET /api/reports/daily-trends?days=7` |
+
+### Endpoint Details
+
+#### 1. Welcome Message
+- **Endpoint:** `GET /`
+- **Description:** Returns a welcome message and API version
+- **Response:**
+```json
+{
+  "message": "Medical Telegram Warehouse API",
+  "version": "1.0.0",
+  "endpoints": [
+    "/api/reports/top-products",
+    "/api/channels/{channel_name}/activity",
+    "/api/search/messages",
+    "/api/reports/visual-content",
+    "/api/messages/stats"
+  ]
+}
+```
 Example Response
-json
+```json
 {
   "products": [
     {
@@ -324,6 +347,7 @@ json
   "channel_filter": "All channels",
   "limit": 10
 }
+```
 API Documentation
 Swagger UI: http://localhost:8000/docs
 
