@@ -1,0 +1,126 @@
+version: 2
+
+models:
+  - name: dim_channels
+    description: "Dimension table for Telegram channels"
+    columns:
+      - name: channel_key
+        description: "Surrogate key for channel"
+        tests:
+          - unique
+          - not_null
+      
+      - name: channel_name
+        description: "Name of the Telegram channel"
+        tests:
+          - unique
+          - not_null
+      
+      - name: channel_type
+        description: "Type of channel (Medical/Cosmetics/Pharmaceutical/Other)"
+      
+      - name: first_post_date
+        description: "Date of first post in the channel"
+      
+      - name: last_post_date
+        description: "Date of last post in the channel"
+      
+      - name: total_posts
+        description: "Total number of posts in the channel"
+        tests:
+          - not_null
+      
+      - name: avg_views
+        description: "Average views per message"
+      
+      - name: days_active
+        description: "Number of days the channel has been active"
+      
+      - name: posts_per_day
+        description: "Average posts per day"
+
+  - name: dim_dates
+    description: "Dimension table for dates"
+    columns:
+      - name: date_key
+        description: "Surrogate key for date"
+        tests:
+          - unique
+          - not_null
+      
+      - name: date_full
+        description: "Full date"
+        tests:
+          - unique
+          - not_null
+      
+      - name: day_of_week
+        description: "Day of week (0-6, Sunday=0)"
+      
+      - name: day_name
+        description: "Name of the day"
+      
+      - name: week_of_year
+        description: "Week number of the year"
+      
+      - name: month_name
+        description: "Name of the month"
+      
+      - name: quarter
+        description: "Quarter of the year"
+      
+      - name: year
+        description: "Year"
+      
+      - name: is_weekend
+        description: "Whether the date is a weekend"
+
+  - name: fct_messages
+    description: "Fact table for messages"
+    columns:
+      - name: message_key
+        description: "Surrogate key for message"
+        tests:
+          - unique
+          - not_null
+      
+      - name: message_id
+        description: "Original message ID"
+        tests:
+          - not_null
+      
+      - name: channel_key
+        description: "Foreign key to dim_channels"
+        tests:
+          - relationships:
+              to: ref('dim_channels')
+              field: channel_key
+      
+      - name: date_key
+        description: "Foreign key to dim_dates"
+        tests:
+          - relationships:
+              to: ref('dim_dates')
+              field: date_key
+      
+      - name: views
+        description: "Number of views"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      
+      - name: forwards
+        description: "Number of forwards"
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+      
+      - name: has_media
+        description: "Whether message has media"
+        tests:
+          - not_null
+      
+      - name: content_category
+        description: "Category of message content"

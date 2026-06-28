@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: stg_telegram_messages
+    description: "Cleaned staging model for Telegram messages"
+    columns:
+      - name: message_id
+        description: "Unique identifier for each message"
+        tests:
+          - unique
+          - not_null
+      
+      - name: channel_name
+        description: "Name of the Telegram channel"
+        tests:
+          - not_null
+      
+      - name: message_date
+        description: "Timestamp of the message"
+        tests:
+          - not_null
+      
+      - name: message_text
+        description: "Full text content of the message"
+      
+      - name: has_media
+        description: "Whether the message contains media"
+        tests:
+          - not_null
+      
+      - name: image_path
+        description: "Path to downloaded image (if applicable)"
+      
+      - name: views
+        description: "Number of views on the message"
+        tests:
+          - not_null
+      
+      - name: forwards
+        description: "Number of times the message was forwarded"
+        tests:
+          - not_null
+      
+      - name: replies
+        description: "Number of replies to the message"
+        tests:
+          - not_null
+      
+      - name: message_length
+        description: "Length of the message text in characters"
+      
+      - name: channel_type
+        description: "Classification of channel type (Medical/Cosmetics/Pharmaceutical/Other)"
