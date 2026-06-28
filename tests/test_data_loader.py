@@ -94,29 +94,29 @@ class TestDataLoader:
             data_loader.connect()
 
     @patch('psycopg2.connect')
-def test_create_raw_table(self, mock_connect, data_loader):
-    """Test raw table creation."""
-    # Create a mock connection with proper context manager support
-    mock_connection = Mock()
-    mock_cursor = Mock()
-    
-    # Setup the context manager properly
-    mock_connection.__enter__ = Mock(return_value=mock_connection)
-    mock_connection.__exit__ = Mock(return_value=False)
-    mock_connection.cursor.return_value = mock_cursor
-    
-    mock_connect.return_value = mock_connection
-    
-    data_loader.connection = mock_connection
-    data_loader.create_raw_table()
-    
-    # Check that execute was called with SQL containing CREATE TABLE
-    assert mock_cursor.execute.called
-    sql_call = mock_cursor.execute.call_args[0][0]
-    assert 'CREATE SCHEMA' in sql_call
-    assert 'CREATE TABLE' in sql_call
-    assert 'raw.telegram_messages' in sql_call
-    mock_connection.commit.assert_called_once()
+    def test_create_raw_table(self, mock_connect, data_loader):
+        """Test raw table creation."""
+        # Create mock objects
+        mock_connection = Mock()
+        mock_cursor = Mock()
+
+        # Setup context manager properly
+        mock_connection.__enter__ = Mock(return_value=mock_connection)
+        mock_connection.__exit__ = Mock(return_value=False)
+        mock_connection.cursor.return_value = mock_cursor
+
+        mock_connect.return_value = mock_connection
+
+        data_loader.connection = mock_connection
+        data_loader.create_raw_table()
+
+        # Verify
+        mock_cursor.execute.assert_called_once()
+        sql_call = mock_cursor.execute.call_args[0][0]
+        assert 'CREATE SCHEMA' in sql_call
+        assert 'CREATE TABLE' in sql_call
+        assert 'raw.telegram_messages' in sql_call
+        mock_connection.commit.assert_called_once()
 
     def test_load_json_files(self, data_loader, sample_messages, tmp_path):
         """Test loading JSON files."""
@@ -174,7 +174,7 @@ def test_create_raw_table(self, mock_connect, data_loader):
             f.write('invalid json {')
 
         messages = data_loader.load_json_files()
-        assert messages == []  # Should handle error gracefully
+        assert messages == []
 
     @patch('src.data_loader.execute_values')
     @patch('psycopg2.connect')
@@ -245,7 +245,7 @@ def test_create_raw_table(self, mock_connect, data_loader):
 
         # Test closing when connection is None
         data_loader.connection = None
-        data_loader.close()  # Should not raise
+        data_loader.close()
 
 
 class TestDataLoaderIntegration:
