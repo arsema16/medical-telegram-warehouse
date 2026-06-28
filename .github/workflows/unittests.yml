@@ -1,0 +1,279 @@
+name: Unit Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y postgresql-client libpq-dev
+    
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov pytest-asyncio black flake8 mypy
+        pip install dbt-postgres dbt-utils
+    
+    - name: Create test directories
+      run: |
+        mkdir -p data/raw/telegram_messages data/raw/images logs
+        mkdir -p medical_warehouse/logs medical_warehouse/target
+    
+    - name: Set up dbt profiles
+      run: |
+        mkdir -p ~/.dbt
+        cat > ~/.dbt/profiles.yml << EOF
+        medical_warehouse:
+          target: test
+          outputs:
+            test:
+              type: postgres
+              host: localhost
+              port: 5432
+              user: test_user
+              password: test_password
+              dbname: test_db
+              schema: public
+              threads: 4
+        EOF
+    
+    - name: Lint with flake8
+      run: |
+        flake8 src/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 src/ tests/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    
+    - name: Check formatting with black
+      run: |
+        black --check src/ tests/ --diff
+    
+    - name: Type check with mypy
+      run: |
+        mypy src/ --ignore-missing-imports || true
+    
+    - name: Run unit tests with pytest
+      env:
+        DB_HOST: localhost
+        DB_PORT: 5432
+        DB_USER: test_user
+        DB_PASSWORD: test_password
+        DB_NAME: test_db
+        TELEGRAM_API_ID: 12345
+        TELEGRAM_API_HASH: test_hash
+        TELEGRAM_PHONE: +1234567890
+        TELEGRAM_CHANNELS: test_channel
+      run: |
+        pytest tests/ -v --cov=src --cov-report=xml --cov-report=term --cov-fail-under=70 -m "not integration"
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: false
+    
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        for i in {1..10}; do
+          if pg_isready -h localhost -U test_user -d test_db; then
+            echo "PostgreSQL is ready"
+            break
+          fi
+          echo "Waiting for PostgreSQL..."
+          sleep 2
+        done
+    
+    - name: Run dbt debug
+      run: |
+        cd medical_warehouse
+        dbt debug || true
+    
+    - name: Run dbt dependencies
+      run: |
+        cd medical_warehouse
+        if [ -f "packages.yml" ]; then
+          dbt deps
+        fi
+    
+    - name: Run dbt seed (if seeds exist)
+      run: |
+        cd medical_warehouse
+        if [ -d "seeds" ] && [ "$(ls -A seeds)" ]; then
+          dbt seed
+        fi
+    
+    - name: Run dbt models
+      run: |
+        cd medical_warehouse
+        dbt run --models staging marts
+    
+    - name: Run dbt tests
+      run: |
+        cd medical_warehouse
+        dbt test
+    
+    - name: Generate dbt documentation
+      run: |
+        cd medical_warehouse
+        dbt docs generate
+    
+    - name: Upload dbt artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dbt-artifacts
+        path: |
+          medical_warehouse/target/
+          medical_warehouse/logs/
+    
+    - name: Run integration tests (if credentials available)
+      env:
+        TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+        TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+        TELEGRAM_PHONE: ${{ secrets.TELEGRAM_PHONE }}
+        TELEGRAM_CHANNELS: ${{ secrets.TELEGRAM_CHANNELS }}
+      run: |
+        if [ -n "$TELEGRAM_API_ID" ] && [ -n "$TELEGRAM_API_HASH" ]; then
+          pytest tests/ -v --cov=src --cov-append -m integration
+        else
+          echo "Skipping integration tests - no credentials provided"
+        fi
+    
+    - name: Run API tests
+      run: |
+        if [ -f "api/main.py" ]; then
+          python -c "import api.main; print('API module loaded successfully')"
+        fi
+    
+    - name: Check Docker setup
+      run: |
+        if [ -f "docker-compose.yml" ]; then
+          docker-compose config
+        fi
+    
+    - name: Verify project structure
+      run: |
+        echo "Checking project structure..."
+        [ -f "src/scraper.py" ] && echo "✓ scraper.py exists"
+        [ -f "src/data_loader.py" ] && echo "✓ data_loader.py exists"
+        [ -d "medical_warehouse/models/staging" ] && echo "✓ staging models exist"
+        [ -d "medical_warehouse/models/marts" ] && echo "✓ marts models exist"
+        [ -f "medical_warehouse/dbt_project.yml" ] && echo "✓ dbt_project.yml exists"
+        [ -f ".env.example" ] && echo "✓ .env.example exists" || echo "⚠️ .env.example not found"
+    
+    - name: Run security check
+      run: |
+        pip install bandit
+        bandit -r src/ -ll -f json -o bandit-report.json || true
+    
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: |
+          coverage.xml
+          .coverage
+          htmlcov/
+          bandit-report.json
+          pytest-report.xml
+    
+    - name: Notify on failure
+      if: failure()
+      run: |
+        echo "❌ Tests failed! Please check the logs."
+        echo "Check the artifacts for detailed test reports."
+
+  sonarcloud:
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: Download test artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: test-results
+        path: ./
+    
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.organization=${{ github.repository_owner }}
+          -Dsonar.projectKey=${{ github.repository_owner }}_medical-telegram-warehouse
+          -Dsonar.python.coverage.reportPaths=coverage.xml
+          -Dsonar.sources=src/
+          -Dsonar.tests=tests/
+          -Dsonar.exclusions=**/__pycache__/**,**/*.pyc
+      continue-on-error: true
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+      continue-on-error: true
+    
+    - name: Upload Trivy results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: 'trivy-results.sarif'
+      continue-on-error: true
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Dependency Review
+      uses: actions/dependency-review-action@v3
+      with:
+        fail-on-severity: high
