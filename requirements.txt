@@ -16,13 +16,13 @@ ultralytics==8.0.172
 opencv-python==4.8.0.74
 Pillow==10.0.0
 
-# API - Use versions compatible with pydantic v2
+# API
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 pydantic==2.5.0
 pydantic-settings==2.1.0
 
-# Orchestration - Use latest dagster with pydantic v2 support
+# Orchestration
 dagster>=1.6.0
 dagster-webserver>=1.6.0
 dagster-postgres>=0.21.0
@@ -39,3 +39,7 @@ mypy==1.7.0
 # Utils
 python-multipart==0.0.6
 aiofiles==23.2.1
+
+# Production
+python-json-logger==2.0.7
+structlog==23.2.0
