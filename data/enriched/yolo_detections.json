@@ -1,0 +1,836 @@
+[
+  {
+    "image_path": "data\\raw\\images\\chemed\\103095.jpg",
+    "channel": "chemed",
+    "message_id": 103095,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "surfboard": 1,
+      "snowboard": 1,
+      "kite": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.39382174611091614,
+        "bbox": [
+          219.28964233398438,
+          159.10647583007812,
+          281.1278381347656,
+          321.6976318359375
+        ]
+      },
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.3809390962123871,
+        "bbox": [
+          359.82568359375,
+          159.2457275390625,
+          421.531982421875,
+          321.748046875
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.25783783197402954,
+        "bbox": [
+          219.21829223632812,
+          159.19381713867188,
+          281.2964782714844,
+          321.40777587890625
+        ]
+      }
+    ],
+    "total_detections": 3,
+    "detections": [
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.39382174611091614,
+        "bbox": [
+          219.28964233398438,
+          159.10647583007812,
+          281.1278381347656,
+          321.6976318359375
+        ]
+      },
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.3809390962123871,
+        "bbox": [
+          359.82568359375,
+          159.2457275390625,
+          421.531982421875,
+          321.748046875
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.25783783197402954,
+        "bbox": [
+          219.21829223632812,
+          159.19381713867188,
+          281.2964782714844,
+          321.40777587890625
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\111255.jpg",
+    "channel": "chemed",
+    "message_id": 111255,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "stop sign": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.30763235688209534,
+        "bbox": [
+          280.2344665527344,
+          100.20895385742188,
+          361.1940002441406,
+          202.33624267578125
+        ]
+      }
+    ],
+    "total_detections": 1,
+    "detections": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.30763235688209534,
+        "bbox": [
+          280.2344665527344,
+          100.20895385742188,
+          361.1940002441406,
+          202.33624267578125
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\116209.jpg",
+    "channel": "chemed",
+    "message_id": 116209,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {},
+    "top_objects": [],
+    "total_detections": 0,
+    "detections": []
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\124514.jpg",
+    "channel": "chemed",
+    "message_id": 124514,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "stop sign": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.30735868215560913,
+        "bbox": [
+          280.23358154296875,
+          100.20883178710938,
+          361.19366455078125,
+          202.33322143554688
+        ]
+      }
+    ],
+    "total_detections": 1,
+    "detections": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.30735868215560913,
+        "bbox": [
+          280.23358154296875,
+          100.20883178710938,
+          361.19366455078125,
+          202.33322143554688
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\133277.jpg",
+    "channel": "chemed",
+    "message_id": 133277,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {},
+    "top_objects": [],
+    "total_detections": 0,
+    "detections": []
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\141385.jpg",
+    "channel": "chemed",
+    "message_id": 141385,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "stop sign": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.3077333867549896,
+        "bbox": [
+          280.2347412109375,
+          100.20834350585938,
+          361.193603515625,
+          202.3353271484375
+        ]
+      }
+    ],
+    "total_detections": 1,
+    "detections": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.3077333867549896,
+        "bbox": [
+          280.2347412109375,
+          100.20834350585938,
+          361.193603515625,
+          202.3353271484375
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\141904.jpg",
+    "channel": "chemed",
+    "message_id": 141904,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {},
+    "top_objects": [],
+    "total_detections": 0,
+    "detections": []
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\158040.jpg",
+    "channel": "chemed",
+    "message_id": 158040,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "stop sign": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.30761823058128357,
+        "bbox": [
+          280.2342529296875,
+          100.20850372314453,
+          361.193603515625,
+          202.334716796875
+        ]
+      }
+    ],
+    "total_detections": 1,
+    "detections": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.30761823058128357,
+        "bbox": [
+          280.2342529296875,
+          100.20850372314453,
+          361.193603515625,
+          202.334716796875
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\158965.jpg",
+    "channel": "chemed",
+    "message_id": 158965,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "surfboard": 1,
+      "snowboard": 1,
+      "kite": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.38875409960746765,
+        "bbox": [
+          219.28939819335938,
+          159.10855102539062,
+          281.13092041015625,
+          321.7060241699219
+        ]
+      },
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38094082474708557,
+        "bbox": [
+          359.82568359375,
+          159.24575805664062,
+          421.531982421875,
+          321.748046875
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.2573404908180237,
+        "bbox": [
+          219.21783447265625,
+          159.17877197265625,
+          281.299560546875,
+          321.4090576171875
+        ]
+      }
+    ],
+    "total_detections": 3,
+    "detections": [
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.38875409960746765,
+        "bbox": [
+          219.28939819335938,
+          159.10855102539062,
+          281.13092041015625,
+          321.7060241699219
+        ]
+      },
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38094082474708557,
+        "bbox": [
+          359.82568359375,
+          159.24575805664062,
+          421.531982421875,
+          321.748046875
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.2573404908180237,
+        "bbox": [
+          219.21783447265625,
+          159.17877197265625,
+          281.299560546875,
+          321.4090576171875
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\162740.jpg",
+    "channel": "chemed",
+    "message_id": 162740,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "surfboard": 1,
+      "snowboard": 1,
+      "kite": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.3938618302345276,
+        "bbox": [
+          219.29132080078125,
+          159.10494995117188,
+          281.12774658203125,
+          321.6945495605469
+        ]
+      },
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38093262910842896,
+        "bbox": [
+          359.8256530761719,
+          159.2457275390625,
+          421.5319519042969,
+          321.7480773925781
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.2572157084941864,
+        "bbox": [
+          219.22116088867188,
+          159.19216918945312,
+          281.2963562011719,
+          321.4078369140625
+        ]
+      }
+    ],
+    "total_detections": 3,
+    "detections": [
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.3938618302345276,
+        "bbox": [
+          219.29132080078125,
+          159.10494995117188,
+          281.12774658203125,
+          321.6945495605469
+        ]
+      },
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38093262910842896,
+        "bbox": [
+          359.8256530761719,
+          159.2457275390625,
+          421.5319519042969,
+          321.7480773925781
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.2572157084941864,
+        "bbox": [
+          219.22116088867188,
+          159.19216918945312,
+          281.2963562011719,
+          321.4078369140625
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\chemed\\164128.jpg",
+    "channel": "chemed",
+    "message_id": 164128,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "stop sign": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.3076857924461365,
+        "bbox": [
+          280.23431396484375,
+          100.2088851928711,
+          361.1937255859375,
+          202.33511352539062
+        ]
+      }
+    ],
+    "total_detections": 1,
+    "detections": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.3076857924461365,
+        "bbox": [
+          280.23431396484375,
+          100.2088851928711,
+          361.1937255859375,
+          202.33511352539062
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\lobeliacosmetics\\101999.jpg",
+    "channel": "lobeliacosmetics",
+    "message_id": 101999,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "stop sign": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.3079889118671417,
+        "bbox": [
+          280.2270202636719,
+          100.22964477539062,
+          361.1891784667969,
+          202.33697509765625
+        ]
+      }
+    ],
+    "total_detections": 1,
+    "detections": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.3079889118671417,
+        "bbox": [
+          280.2270202636719,
+          100.22964477539062,
+          361.1891784667969,
+          202.33697509765625
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\lobeliacosmetics\\104828.jpg",
+    "channel": "lobeliacosmetics",
+    "message_id": 104828,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "snowboard": 1,
+      "surfboard": 1,
+      "kite": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38040927052497864,
+        "bbox": [
+          359.82476806640625,
+          159.24761962890625,
+          421.53192138671875,
+          321.748291015625
+        ]
+      },
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.3633105754852295,
+        "bbox": [
+          219.2781982421875,
+          159.1368408203125,
+          281.127685546875,
+          321.711181640625
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.27839282155036926,
+        "bbox": [
+          219.07461547851562,
+          159.22964477539062,
+          281.0332946777344,
+          321.136474609375
+        ]
+      }
+    ],
+    "total_detections": 3,
+    "detections": [
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38040927052497864,
+        "bbox": [
+          359.82476806640625,
+          159.24761962890625,
+          421.53192138671875,
+          321.748291015625
+        ]
+      },
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.3633105754852295,
+        "bbox": [
+          219.2781982421875,
+          159.1368408203125,
+          281.127685546875,
+          321.711181640625
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.27839282155036926,
+        "bbox": [
+          219.07461547851562,
+          159.22964477539062,
+          281.0332946777344,
+          321.136474609375
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\lobeliacosmetics\\105844.jpg",
+    "channel": "lobeliacosmetics",
+    "message_id": 105844,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {},
+    "top_objects": [],
+    "total_detections": 0,
+    "detections": []
+  },
+  {
+    "image_path": "data\\raw\\images\\lobeliacosmetics\\130488.jpg",
+    "channel": "lobeliacosmetics",
+    "message_id": 130488,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {},
+    "top_objects": [],
+    "total_detections": 0,
+    "detections": []
+  },
+  {
+    "image_path": "data\\raw\\images\\lobeliacosmetics\\137109.jpg",
+    "channel": "lobeliacosmetics",
+    "message_id": 137109,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "snowboard": 1,
+      "surfboard": 1,
+      "kite": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38045498728752136,
+        "bbox": [
+          359.82470703125,
+          159.24761962890625,
+          421.531982421875,
+          321.748291015625
+        ]
+      },
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.3800583779811859,
+        "bbox": [
+          219.284423828125,
+          159.1240234375,
+          281.1221923828125,
+          321.7004089355469
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.2598046362400055,
+        "bbox": [
+          219.217529296875,
+          159.17547607421875,
+          281.28955078125,
+          321.4072265625
+        ]
+      }
+    ],
+    "total_detections": 3,
+    "detections": [
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38045498728752136,
+        "bbox": [
+          359.82470703125,
+          159.24761962890625,
+          421.531982421875,
+          321.748291015625
+        ]
+      },
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.3800583779811859,
+        "bbox": [
+          219.284423828125,
+          159.1240234375,
+          281.1221923828125,
+          321.7004089355469
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.2598046362400055,
+        "bbox": [
+          219.217529296875,
+          159.17547607421875,
+          281.28955078125,
+          321.4072265625
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\lobeliacosmetics\\163339.jpg",
+    "channel": "lobeliacosmetics",
+    "message_id": 163339,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "stop sign": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.3072994351387024,
+        "bbox": [
+          280.2275085449219,
+          100.22959899902344,
+          361.1886901855469,
+          202.3376007080078
+        ]
+      }
+    ],
+    "total_detections": 1,
+    "detections": [
+      {
+        "class_id": 11,
+        "class": "stop sign",
+        "confidence": 0.3072994351387024,
+        "bbox": [
+          280.2275085449219,
+          100.22959899902344,
+          361.1886901855469,
+          202.3376007080078
+        ]
+      }
+    ]
+  },
+  {
+    "image_path": "data\\raw\\images\\tikvahpharma\\103708.jpg",
+    "channel": "tikvahpharma",
+    "message_id": 103708,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {},
+    "top_objects": [],
+    "total_detections": 0,
+    "detections": []
+  },
+  {
+    "image_path": "data\\raw\\images\\tikvahpharma\\116746.jpg",
+    "channel": "tikvahpharma",
+    "message_id": 116746,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {},
+    "top_objects": [],
+    "total_detections": 0,
+    "detections": []
+  },
+  {
+    "image_path": "data\\raw\\images\\tikvahpharma\\141560.jpg",
+    "channel": "tikvahpharma",
+    "message_id": 141560,
+    "category": "other",
+    "is_medical": false,
+    "object_counts": {
+      "snowboard": 1,
+      "surfboard": 1,
+      "kite": 1
+    },
+    "top_objects": [
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38090774416923523,
+        "bbox": [
+          359.82550048828125,
+          159.24639892578125,
+          421.531982421875,
+          321.747802734375
+        ]
+      },
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.3704315721988678,
+        "bbox": [
+          219.28228759765625,
+          159.108642578125,
+          281.12274169921875,
+          321.6954345703125
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.2802398204803467,
+        "bbox": [
+          219.07907104492188,
+          159.21807861328125,
+          281.0291748046875,
+          321.1341552734375
+        ]
+      }
+    ],
+    "total_detections": 3,
+    "detections": [
+      {
+        "class_id": 31,
+        "class": "snowboard",
+        "confidence": 0.38090774416923523,
+        "bbox": [
+          359.82550048828125,
+          159.24639892578125,
+          421.531982421875,
+          321.747802734375
+        ]
+      },
+      {
+        "class_id": 37,
+        "class": "surfboard",
+        "confidence": 0.3704315721988678,
+        "bbox": [
+          219.28228759765625,
+          159.108642578125,
+          281.12274169921875,
+          321.6954345703125
+        ]
+      },
+      {
+        "class_id": 33,
+        "class": "kite",
+        "confidence": 0.2802398204803467,
+        "bbox": [
+          219.07907104492188,
+          159.21807861328125,
+          281.0291748046875,
+          321.1341552734375
+        ]
+      }
+    ]
+  }
+]
